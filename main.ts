@@ -7,14 +7,14 @@ input.onButtonPressed(Button.AB, function () {
     shoot.set(LedSpriteProperty.Brightness, 60)
     for (let index = 0; index < 4; index++) {
         shoot.change(LedSpriteProperty.Y, -1)
-        basic.pause(125)
+        basic.pause(100)
         if (shoot.isTouching(enemy)) {
             enemy.delete()
             game.addScore(1)
             shoot.delete()
         }
     }
-    if (shoot.get(LedSpriteProperty.Y) >= 0) {
+    if (shoot.get(LedSpriteProperty.Y) == 0) {
         shoot.delete()
     }
 })
@@ -26,10 +26,11 @@ let enemy: game.LedSprite = null
 let player: game.LedSprite = null
 player = game.createSprite(2, 4)
 enemy = game.createSprite(randint(0, 4), 0)
-let spd = 600
+let spd = 500
 let enemycount = 0
 game.setScore(0)
 let countwall = 0
+game.setLife(3)
 basic.forever(function () {
     while (countwall <= 1) {
         enemy.move(1)
@@ -48,13 +49,14 @@ basic.forever(function () {
     }
     if (enemy.get(LedSpriteProperty.Y) >= 4) {
         enemy.delete()
+        game.removeLife(1)
     }
     if (enemy.isDeleted()) {
         enemy = game.createSprite(randint(0, 4), 0)
         enemycount += 1
     }
     if (enemycount > 5) {
-        spd += -50
+        spd += -75
         enemycount = 0
     }
 })
