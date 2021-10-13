@@ -29,7 +29,17 @@ enemy = game.createSprite(randint(0, 4), 0)
 let spd = 600
 let enemycount = 0
 game.setScore(0)
+let countwall = 0
 basic.forever(function () {
+    while (countwall <= 1) {
+        enemy.move(1)
+        basic.pause(spd)
+        enemy.ifOnEdgeBounce()
+        if (enemy.get(LedSpriteProperty.X) == 0 || enemy.get(LedSpriteProperty.X) == 4) {
+            countwall += 1
+        }
+    }
+    countwall = 0
     enemy.change(LedSpriteProperty.Y, 1)
     basic.pause(spd)
     if (enemy.isTouching(player)) {
